@@ -22,7 +22,7 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/nestjs:latest .
+          docker build -f test.dockerfile -t ${{ secrets.DOCKER_HUB_USERNAME }}/nestjs:latest .
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nestjs:latest
