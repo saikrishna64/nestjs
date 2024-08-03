@@ -47,7 +47,6 @@ jobs:
 
     - name: Push Docker image to Amazon ECR
       run: |
-        IMAGE_TAG=my-nodejs-app:latest
         ECR_REPOSITORY=sample
         ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY
         docker push $ECR_URI:latest
