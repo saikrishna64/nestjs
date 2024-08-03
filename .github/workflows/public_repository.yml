@@ -34,21 +34,21 @@ jobs:
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: ap-south-1
 
-    - name: Log in to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-      
+    -  name: Login to Amazon ECR Public
+       id: login-ecr-public
+       uses: aws-actions/amazon-ecr-login@v2
+       with:
+         registry-type: public
+
     - name: Tag Docker image
       run: |
         IMAGE_TAG=my-nodejs-app:latest
-        ECR_REPOSITORY=test  # Update with your ECR repository name
-        ECR_URI=public.ecr.aws/z7y8r1n2/test
-        docker tag my-nodejs-app:latest $ECR_URI:latest
-        echo "Docker image tagged with ECR URI: $ECR_URI:latest"
+        ECR_PUBLIC_URI=public.ecr.aws/z7y8r1n2/test
+        docker tag my-nodejs-app:latest $ECR_PUBLIC_URI:latest
+        echo "Docker image tagged with ECR Public URI: $ECR_PUBLIC_URI:latest"
 
-    - name: Push Docker image to Amazon ECR
+    - name: Push Docker image to Amazon ECR Public
       run: |
-        ECR_REPOSITORY=test  # Update with your ECR repository name
-        ECR_URI=public.ecr.aws/z7y8r1n2/test
-        # echo "Pushing Docker image to ECR repository: $ECR_URI:latest"
-        docker push $ECR_URI:latest
+        ECR_PUBLIC_URI=public.ecr.aws/z7y8r1n2/test
+        echo "Pushing Docker image to ECR Public repository: $ECR_PUBLIC_URI:latest"
+        docker push $ECR_PUBLIC_URI:latest
