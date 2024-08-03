@@ -42,13 +42,13 @@ jobs:
       run: |
         IMAGE_TAG=my-nodejs-app:latest
         ECR_REPOSITORY=sample  # Update with your ECR repository name
-        ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY
+        ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/$ECR_REPOSITORY
         docker tag my-nodejs-app:latest $ECR_URI:latest
         echo "Docker image tagged with ECR URI: $ECR_URI:latest"
 
     - name: Push Docker image to Amazon ECR
       run: |
         ECR_REPOSITORY=sample  # Update with your ECR repository name
-        ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY
+        ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/$ECR_REPOSITORY
         # echo "Pushing Docker image to ECR repository: $ECR_URI:latest"
         docker push $ECR_URI:latest
