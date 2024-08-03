@@ -38,6 +38,11 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Verify Docker Login
+      run: |
+        echo "Checking Docker login status..."
+        docker info
+
     - name: Tag Docker image
       run: |
         IMAGE_TAG=my-nodejs-app:latest
