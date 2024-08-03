@@ -41,13 +41,13 @@ jobs:
     - name: Tag Docker image
       run: |
         IMAGE_TAG=my-nodejs-app:latest
-        ECR_REPOSITORY=test
+        ECR_REPOSITORY=sample
         ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/$ECR_REPOSITORY
         docker tag my-nodejs-app:latest $ECR_URI:latest
 
     - name: Push Docker image to Amazon ECR
       run: |
         IMAGE_TAG=my-nodejs-app:latest
-        ECR_REPOSITORY=test
+        ECR_REPOSITORY=sample
         ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/$ECR_REPOSITORY
         docker push $ECR_URI:latest
