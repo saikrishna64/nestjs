@@ -50,5 +50,5 @@ jobs:
       run: |
         ECR_REPOSITORY=sample  # Update with your ECR repository name
         ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.eu-north-1.amazonaws.com/$ECR_REPOSITORY
-        echo "Pushing Docker image to ECR repository: $ECR_URI:latest"
+        # echo "Pushing Docker image to ECR repository: $ECR_URI:latest"
         docker push $ECR_URI:latest
