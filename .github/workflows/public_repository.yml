@@ -1,1 +1,54 @@
+name: CI with Docker 
 
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Verify Dockerfile location
+      run: ls -la ./
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker image
+      run: docker build -t my-nodejs-app:latest -f test.dockerfile .
+
+    - name: Run tests inside Docker container
+      run: docker run my-nodejs-app npm test
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+        aws-region: ap-south-1
+
+    - name: Log in to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      
+    - name: Tag Docker image
+      run: |
+        IMAGE_TAG=my-nodejs-app:latest
+        ECR_REPOSITORY=test  # Update with your ECR repository name
+        ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/$ECR_REPOSITORY
+        docker tag my-nodejs-app:latest $ECR_URI:latest
+        echo "Docker image tagged with ECR URI: $ECR_URI:latest"
+
+    - name: Push Docker image to Amazon ECR
+      run: |
+        ECR_REPOSITORY=test  # Update with your ECR repository name
+        ECR_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/$ECR_REPOSITORY
+        # echo "Pushing Docker image to ECR repository: $ECR_URI:latest"
+        docker push $ECR_URI:latest
