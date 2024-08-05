@@ -14,4 +14,4 @@ jobs:
 
     steps:
     - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+      run: echo "Hello ${{ vars.SAI }}"
