@@ -16,6 +16,6 @@ jobs:
     - name: Send greeting
       run: |
        CURRENT_NUMBER = ${{env.SAI}}
-       NEXT_NUMBER=$((CURRENT_NUMBER + 1))
-       echo $CURRENT_NUMBER
+       echo "$CURRENT_NUMBER"
+       echo ${{env.SAI}}
 
