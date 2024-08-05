@@ -40,7 +40,7 @@ jobs:
       
     - name: Initialize environment variable
       run: |
-        echo "CURRENT_NUMBER=0" >> $GITHUB_ENV
+        echo "CURRENT_NUMBER=1" >> $GITHUB_ENV
 
     - name: Read and increment the environment variable
       id: increment
