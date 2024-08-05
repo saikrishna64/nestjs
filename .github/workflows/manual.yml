@@ -14,4 +14,8 @@ jobs:
 
     steps:
     - name: Send greeting
-      run: echo "Hello ${{ vars.SAI }}"
+      run: |
+       CURRENT_NUMBER = ${{ env.SAI }}
+       NEXT_NUMBER=$((CURRENT_NUMBER + 1))
+       echo "SAI=$NEXT_NUMBER" >> $GITHUB_ENV
+
