@@ -17,5 +17,7 @@ jobs:
       run: |
         SAI=$((SAI + 1))
         echo "Current Number: $SAI"
+        echo "SAI=$SAI" >> $GITHUB_ENV
+        echo "Current Number: $SAI"
         
 
