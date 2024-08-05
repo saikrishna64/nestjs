@@ -37,10 +37,29 @@ jobs:
     - name: Log in to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      
+    - name: Initialize environment variable
+      run: |
+        echo "CURRENT_NUMBER=0" >> $GITHUB_ENV
 
-    - name: Get image sequence number
-      id: get-sequence
-      run: echo "::set-output name=seq::$(aws ecr describe-images --repository-name <your-repository-name> --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text | grep -o '[0-9]*' | tail -1 | awk '{print $1+1}')"
+    - name: Read and increment the environment variable
+      id: increment
+      run: |
+        # Read the current value of the environment variable
+        CURRENT_NUMBER=${{ env.CURRENT_NUMBER }}
+        
+        # Increment the value
+        NEXT_NUMBER=$((CURRENT_NUMBER + 1))
+        
+        # Print the values for debugging
+        echo "Current Number: $CURRENT_NUMBER"
+        echo "Next Number: $NEXT_NUMBER"
+        
+        # Set the new value as an environment variable
+        echo "NEXT_NUMBER=$NEXT_NUMBER" >> $GITHUB_ENV
+
+    - name: Use the incremented environment variable
+      run: echo "The incremented number is $NEXT_NUMBER"
       
     - name: Tag Docker image
       run: |
