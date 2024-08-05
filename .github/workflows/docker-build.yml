@@ -37,6 +37,10 @@ jobs:
     - name: Log in to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Get image sequence number
+      id: get-sequence
+      run: echo "::set-output name=seq::$(aws ecr describe-images --repository-name <your-repository-name> --query 'sort_by(imageDetails,& imagePushedAt)[-1].imageTags[0]' --output text | grep -o '[0-9]*' | tail -1 | awk '{print $1+1}')"
       
     - name: Tag Docker image
       run: |
