@@ -15,6 +15,5 @@ jobs:
     steps:
     - name: Send greeting
       run: |
-       CURRENT_NUMBER = ${{env.SAI}}
        echo ${{env.SAI}}
 
